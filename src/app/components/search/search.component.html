@@ -1,0 +1,55 @@
+<mat-card>Search by Area, Cuisine, or Both!</mat-card>
+
+<form [formGroup]="searchForm" novalidate fxLayout="column" style="margin: 1em;">
+    
+    <mat-form-field>
+      <mat-select id="type" placeholder="Select a type" formControlName="type" required>
+        <mat-option *ngFor="let type of types" [value]="type">
+            {{type}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div *ngIf="type.invalid && (type.dirty || type.touched)" class="alert">
+      <div *ngIf="type.errors.required">
+        Select a type to begin searching!
+      </div>
+    </div>
+    
+    <mat-form-field>
+      <input id="term" matInput placeholder="Key in search term" formControlName="term" required>
+    </mat-form-field>
+    <div *ngIf="term.invalid && (term.dirty || term.touched)" class="alert">
+      <div *ngIf="term.errors.required">
+        Enter text to being searching!
+      </div>
+    </div>
+    
+    <div fxLayout="row">
+      <button mat-raised-button color="primary" type="submit" (click)="onSubmit()" [disabled]="searchForm.pristine || searchForm.status == 'INVALID'">Search</button>
+      <button mat-raised-button color="primary" type="reset" (click)="reset()" [disabled]="searchForm.pristine" style="margin-left: 1em;">Reset</button>
+    </div>
+</form>
+
+<h3 class="center"> Sort the results by clicking on header!</h3>
+
+<table mat-table [dataSource]="stalls" class="table" matSort style="margin-right: 1em;">
+      
+    <ng-container matColumnDef="stallname">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Stall Name </th>
+      <td mat-cell *matCellDef="let stall"> {{stall.stallname}} </td>
+    </ng-container>
+      
+    <ng-container matColumnDef="stalladdress">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Stall Address </th>
+      <td mat-cell *matCellDef="let stall"> {{stall.stalladdress}} </td>
+    </ng-container>
+      
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+    
+<mat-paginator [length]="length"
+              [pageSize]="pageSize"
+              [pageSizeOptions]="pageSizeOptions" 
+              (page)="$event">
+</mat-paginator>
