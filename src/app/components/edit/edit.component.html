@@ -1,0 +1,36 @@
+<mat-card>Edit Menu</mat-card>
+
+<form [formGroup]="editForm" novalidate fxLayout="column" fxLayoutAlign="center" class="form">
+  <mat-form-field>
+      <input id="foodname" matInput placeholder="Food Name" formControlName="foodname" required>
+  </mat-form-field>
+  <div *ngIf="foodname.invalid && (foodname.dirty || foodname.touched)" class="alert">
+    <div *ngIf="foodname.errors.required">
+      food name is required.
+    </div>
+  </div>
+
+  <mat-form-field>
+      <input id="calories" matInput placeholder="Calories" formControlName="calories" required>
+  </mat-form-field>
+  <div *ngIf="calories.invalid && (calories.dirty || calories.touched)" class="alert">
+    <div *ngIf="calories.errors.required">
+      calories is required.
+    </div>
+  </div>
+
+  <mat-form-field>
+      <input id="price" matInput placeholder="Price" formControlName="price" required>
+  </mat-form-field>
+  <div *ngIf="price.invalid && (price.dirty || price.touched)" class="alert">
+    <div *ngIf="price.errors.required">
+      price is required.
+    </div>
+  </div>
+
+  <div fxLayout="row">
+    <button mat-raised-button color="primary" type="submit" (click)="onSubmit()" [disabled]="editForm.pristine || editForm.status == 'INVALID'">Update</button>
+    <button mat-raised-button color="primary" (click)="goBack()" style="margin-left: 1em;">Cancel</button>
+    <button mat-raised-button color="warn" (click)="removeEntry()" style="margin-left: 1em;">Delete</button>
+  </div>
+</form>

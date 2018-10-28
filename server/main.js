@@ -107,10 +107,84 @@ app.get(API_URI + '/stalls', (req, res) => {
 })
 
 
-// //List out stalls
-// //stall Arr
-// app.get(API_URI + '/stalls', (req,res) =>{
+app.get(API_URI + '/stall', (req,res) =>{
+    let stallName = req.query.stallname;
+    stallCollection
+    .where('stallname', '==', stallName)
+    .get()
+    .then(snapshot => {
+        let stallId = [];
+        snapshot.forEach(doc => {
+            console.log(doc.id);
+            stallId.push(doc.id); 
+        });
+        stallCollection.doc(stallId.toString()).collection("menu").get()
+        .then(snapshot => {
+            let stallMenu = [];
+            snapshot.forEach(doc => {
+                console.log(doc.id, '=>', doc.data());
+                stallMenu.push(doc.data());
+            });
+            console.log(stallMenu);
+            res.status(200).json(stallMenu);
+        })
+    })
+    .catch(err => {
+        console.log('Error getting documents', err);
+    });
+});
+
+
+//List out menu in specific stall
+//stallCombined, stallName, foods
+// app.get(API_URI + '/menu', (req,res) =>{
+//     let idValue = req.query.id;
+//     stallCollection.doc(idValue).get()
+//     .then(result => {
+//             console.log(result.data());
+//             let stallCombined = {
+//                 stallName: result.data(),
+//                 foods : []
+//             }
+//             stallCollection.doc(idValue).collection("menu").get()
+//             .then(snapshot => {
+//                 console.log(snapshot);
+//                 snapshot.forEach(doc => {
+//                     console.log(doc.id, '=>', doc.data());
+//                     stallCombined.foods.push(doc.data());
+//                 });
+//                 console.log(stallCombined.foods);
+//                 res.status(200).json(stallCombined);
+//             })
+//             .catch(err => {
+//                 console.log('Error getting food menu', err);
+//             });
+//     })
+//     .catch(err => {
+//         console.log('Error getting stall', err);
+//     });
+// })
+
+
+
+
+
+
+// app.put(API_URI + '/edit', (req, res) => {
+//     console.info(JSON.stringify(req.body));
+//     let foodname = {... req.body.foodname};
+//     let calories = {... req.body.calories};
+//     let price = {... req.body.price};
+
+
+
+
+
+
+// app.get(API_URI + '/stall', (req,res) =>{
+//     let stallname = req.query.stallname;
 //     stallCollection
+//     .where('stallname', '==', stallname)
 //     .get()
 //     .then(snapshot => {
 //         let stallArr = [];
@@ -125,35 +199,6 @@ app.get(API_URI + '/stalls', (req, res) => {
 //     });
 // });
 
-//List out menu in specific stall
-//stallCombined, stallName, foods
-app.get(API_URI + '/menu', (req,res) =>{
-    let idValue = req.query.id;
-    stallCollection.doc(idValue).get()
-    .then(result => {
-            console.log(result.data());
-            let stallCombined = {
-                stallName: result.data(),
-                foods : []
-            }
-            stallCollection.doc(idValue).collection("menu").get()
-            .then(snapshot => {
-                console.log(snapshot);
-                snapshot.forEach(doc => {
-                    console.log(doc.id, '=>', doc.data());
-                    stallCombined.foods.push(doc.data());
-                });
-                console.log(stallCombined.foods);
-                res.status(200).json(stallCombined);
-            })
-            .catch(err => {
-                console.log('Error getting food menu', err);
-            });
-    })
-    .catch(err => {
-        console.log('Error getting stall', err);
-    });
-})
 
 //Submit stall
 //stallInfo

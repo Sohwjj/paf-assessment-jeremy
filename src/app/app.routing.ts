@@ -6,8 +6,13 @@ import { MenuComponent } from './components/menu/menu.component';
 import { SearchComponent } from './components/search/search.component';
 import { StallComponent } from './components/stall/stall.component';
 import { HomeComponent } from './components/home/home.component';
+import { EditComponent } from './components/edit/edit.component';
 
 const appRoutes = [
+    {
+        path: '',
+        component: HomeComponent
+    },
     {
         path: 'home',
         component: HomeComponent
@@ -23,6 +28,10 @@ const appRoutes = [
     {
         path: 'menu',
         component: MenuComponent
+    },
+    {
+        path: 'edit',
+        component: EditComponent
     }
 ];
 

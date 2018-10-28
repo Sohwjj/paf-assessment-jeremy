@@ -8,6 +8,8 @@ import { Observable } from 'rxjs';
 })
 export class ActionService {
 
+  editDetails = {};
+
   finalSearchCriteria: string;
 
   constructor(private http: HttpClient) { }
@@ -18,13 +20,23 @@ export class ActionService {
     return this.http.get(`${environment.api_url}${this.finalSearchCriteria}`);
   }
 
-  /*getStall(criteria): Observable<any> {
-    return this.http.get(`${environment.api_url}/${criteria}`);
-  }*/
+  getStall(criteria): Observable<any> {
+    this.finalSearchCriteria = `/stall?stallname=${criteria.stallname}`;
+    console.log(this.finalSearchCriteria);
+    return this.http.get(`${environment.api_url}${this.finalSearchCriteria}`);
+  }
 
   addStall(details): Observable<any> {
     console.log(details);
     return this.http.post(`${environment.api_url}/add-stall`, details);
+  }
+
+  editEntry(details): Observable<any> {
+    return this.http.put(`${environment.api_url}/edit`, details);
+  }
+
+  deleteEntry(details): Observable<any> {
+    return this.http.post(`${environment.api_url}/delete`, details);
   }
 
 }

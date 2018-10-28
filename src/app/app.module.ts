@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { AppComponent } from './app.component';
 import { SearchComponent } from './components/search/search.component';
@@ -11,11 +12,8 @@ import { MenuComponent } from './components/menu/menu.component';
 import { RoutingModule } from './app.routing';
 import { MaterialModule } from './material.module';
 import { HomeComponent } from './components/home/home.component';
-
+import { EditComponent } from './components/edit/edit.component';
 import { ActionService } from './services/action.service';
-
-
-
 
 
 @NgModule({
@@ -24,7 +22,8 @@ import { ActionService } from './services/action.service';
     SearchComponent,
     StallComponent,
     MenuComponent,
-    HomeComponent
+    HomeComponent,
+    EditComponent
   ],
   imports: [
     BrowserModule,
@@ -33,7 +32,8 @@ import { ActionService } from './services/action.service';
     FormsModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FlexLayoutModule
   ],
   providers: [ActionService],
   bootstrap: [AppComponent]
